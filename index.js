@@ -16,10 +16,6 @@ app.use(cors());
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-app.get("/", (req, res) => {
-  res.send("HelloAgain");
-});
-
 app.post("/insert", (req, res) => {
   const currentUser = req.body.currentUser;
   const address = req.body.address;
