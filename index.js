@@ -4,8 +4,6 @@ const cors = require("cors");
 const bodyParser = require("body-parser");
 const mysql = require("mysql");
 
-const PORT = process.env.PORT || 3001;
-
 const db = mysql.createPool({
   host: "localhost",
   user: "root",
