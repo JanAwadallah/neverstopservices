@@ -52,8 +52,9 @@ const GoogleAuth = () => {
   };
 
   const onSubmit = () => {
+    const PORT = process.env.PORT || 3001;
     axios
-      .post("http://localhost:3001/insert", {
+      .post(`http://localhost:${PORT}/insert`, {
         currentUser: currentUser,
         address: address,
         date: date,
