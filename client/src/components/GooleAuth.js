@@ -93,12 +93,6 @@ const GoogleAuth = () => {
             checkStatus={checkStatus}
             onSubmit={onSubmit}
           />
-          <button
-            onClick={googleSignOut}
-            className="ui button primary right floated"
-          >
-            Sign Out
-          </button>
         </div>
       );
     } else {
