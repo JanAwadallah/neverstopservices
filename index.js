@@ -5,10 +5,10 @@ const bodyParser = require("body-parser");
 const mysql = require("mysql");
 
 const db = mysql.createPool({
-  host: "localhost",
-  user: "root",
-  password: "password",
-  database: "NSS_db",
+  host: "us-cdbr-east-04.cleardb.com",
+  user: "b7e7d98d494cc4",
+  password: "a3f2fdee",
+  database: "heroku_cb67353c6266fb0",
 });
 app.use(cors());
 app.use(express.json());
@@ -22,7 +22,7 @@ app.post("/insert", (req, res) => {
   const checkStatus = req.body.checkStatus;
 
   const sqlInsert =
-    "INSERT INTO `NSS_db`.`check` (`fullname`, `address` ,`date`, `time`, `status`) VALUES (?,?,?,?,?);";
+    "INSERT INTO `heroku_cb67353c6266fb0`.`check` (`fullname`, `address` ,`date`, `time`, `status`) VALUES (?,?,?,?,?);";
   db.query(
     sqlInsert,
     [currentUser, address, date, time, checkStatus],
