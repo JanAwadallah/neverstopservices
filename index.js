@@ -28,7 +28,7 @@ app.post("/insert", (req, res) => {
     sqlInsert,
     [currentUser, address, date, time, checkStatus],
     (err, result) => {
-      console.log(err);
+      console.error(err);
     }
   );
 });
@@ -39,7 +39,7 @@ if (process.env.NODE_ENV === "production") {
     res.sendFile(path.resolve(__dirname, "client", "build", "index.html"));
   });
 }
-const PORT = process.env.PORT || 3001;
+const PORT = process.env.PORT || 4000;
 
 app.listen(PORT, () => {
   console.log(`Serving on port ${PORT}`);
