@@ -15,6 +15,7 @@ app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.post("/insert", (req, res) => {
+  res.header("Access-Control-Allow-Origin", "*");
   const currentUser = req.body.currentUser;
   const address = req.body.address;
   const date = req.body.date;
