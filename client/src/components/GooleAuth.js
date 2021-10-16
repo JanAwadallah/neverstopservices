@@ -6,52 +6,51 @@ import axios from "axios";
 import Form from "./Form";
 
 const GoogleAuth = () => {
-  const [isSignedIn, setIsSignedIn] = useState(null);
-  const [currentUser, setCurrentUser] = useState(null);
+  const [isSignedIn, setIsSignedIn] = useState(false);
   const [address, setAddress] = useState(null);
   const [checkStatus, setCheckStatus] = useState("");
   const [date, setDate] = useState("");
   const [time, setTime] = useState("");
 
   useEffect(() => {
-    window.gapi.load("client:auth2", () => {
-      window.gapi.client
-        .init({
-          clientId:
-            "256546520924-ipdcpbq22ltoruqv2n9hbqug7c14f063.apps.googleusercontent.com",
+    onAuthChange();
+    // window.gapi.load("client:auth2", () => {
+    //   window.gapi.client
+    //     .init({
+    //       clientId:
+    //         "256546520924-ipdcpbq22ltoruqv2n9hbqug7c14f063.apps.googleusercontent.com",
+    //       scope: "email",
+    //     })
+    //     .then(() => {
+    //       const auth = window.gapi.auth2.getAuthInstance();
+    //       setIsSignedIn(window.gapi.auth2.getAuthInstance().isSignedIn.get());
+    //       auth.isSignedIn.listen(onAuthChange);
+    //     });
+    // });
+  }, [isSignedIn, address]);
 
-          scope: "email",
-        })
-        .then(() => {
-          const auth = window.gapi.auth2.getAuthInstance();
-          setIsSignedIn(window.gapi.auth2.getAuthInstance().isSignedIn.get());
-          auth.isSignedIn.listen(onAuthChange);
-        });
-    });
-  }, [currentUser]);
-
-  const onAuthChange = (isSignedIn) => {
-    if (isSignedIn) {
-      setCurrentUser(
-        window.gapi.auth2
-          .getAuthInstance()
-          .currentUser.get()
-          .getBasicProfile()
-          .getName()
-      );
-      setDate(
-        `${new Date().getDate()}/${
-          new Date().getMonth() + 1
-        }/${new Date().getFullYear()}`
-      );
-      setTime(`${new Date().getHours()}:${new Date().getMinutes()}`);
-    } else {
-      setCurrentUser(null);
-      setIsSignedIn(false);
-    }
+  const onAuthChange = () => {
+    // if (isSignedIn) {
+    // setCurrentUser(
+    //   window.gapi.auth2
+    //     .getAuthInstance()
+    //     .currentUser.get()
+    //     .getBasicProfile()
+    //     .getName()
+    // );
+    setDate(
+      `${new Date().getDate()}/${
+        new Date().getMonth() + 1
+      }/${new Date().getFullYear()}`
+    );
+    setTime(`${new Date().getHours()}:${new Date().getMinutes()}`);
+    // } else {
+    //   setCurrentUser(null);
+    //   setIsSignedIn(false);
+    // }
   };
 
-  const onSubmit = () => {
+  const onSubmit = (currentUser) => {
     const PORT = process.env.PORT || 4000;
     axios
       .post("/insert", {
@@ -89,7 +88,6 @@ const GoogleAuth = () => {
             date={date}
             time={time}
             address={address}
-            currentUser={currentUser}
             checkStatus={checkStatus}
             onSubmit={onSubmit}
           />
@@ -110,12 +108,12 @@ const GoogleAuth = () => {
             <Image src={nss} size="medium" centered />
           </div>
           <div>
-            <button className="ui blue google button" onClick={googleCheckIn}>
-              <i className="icon google"></i>
+            <button className="ui blue button" onClick={googleCheckIn}>
+              <i className="icon sign in"></i>
               Check in
             </button>
-            <button className="ui red google button" onClick={googleCheckOut}>
-              <i className="icon google"></i>
+            <button className="ui red button" onClick={googleCheckOut}>
+              <i className="icon sign out"></i>
               Check out
             </button>
           </div>
@@ -124,16 +122,17 @@ const GoogleAuth = () => {
     }
   };
   const googleCheckIn = () => {
-    window.gapi.auth2.getAuthInstance().signIn();
+    setIsSignedIn(true);
     setCheckStatus("IN");
   };
   const googleCheckOut = () => {
-    window.gapi.auth2.getAuthInstance().signIn();
+    setIsSignedIn(true);
     setCheckStatus("OUT");
   };
   const googleSignOut = () => {
-    alert("All done thankyou");
-    window.gapi.auth2.getAuthInstance().signOut();
+    alert("All done thank you");
+    setIsSignedIn(false);
+
     // setIsSignedIn(window.gapi.auth2.getAuthInstance().isSignedIn.get());
   };
 
@@ -142,17 +141,25 @@ const GoogleAuth = () => {
       navigator.geolocation.getCurrentPosition(res, rej);
     });
   };
+
   getPosition().then((pos) => {
+    let fetchedAddress = "";
     const { latitude, longitude } = pos.coords;
+    const key = "AIzaSyBowHu8yzTf9pJnuUpSErMHd263nmgbNPw";
     fetch(
-      `https://api.opencagedata.com/geocode/v1/json?q=${latitude}+${longitude}&key=3f29112bcb6742e693ffb5be38e1c3ce`
+      `https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=${key}`
     )
       .then((res) => {
         if (!res.ok) throw new Error(`Error ${res.status}`);
         return res.json();
       })
       .then((data) => {
-        setAddress(data.results[0].formatted);
+        if (data.results[0]) {
+          fetchedAddress = data.results[0].formatted_address;
+
+          console.log(fetchedAddress);
+          setAddress(fetchedAddress);
+        }
       });
   });
 
