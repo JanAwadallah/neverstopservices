@@ -43,7 +43,14 @@ const GoogleAuth = () => {
         new Date().getMonth() + 1
       }/${new Date().getFullYear()}`
     );
-    setTime(`${new Date().getHours()}:${new Date().getMinutes()}`);
+    const hour = new Date().getHours().toString();
+    let currentHour = "";
+    let currentMin = "";
+    const min = new Date().getMinutes().toString();
+    hour.length < 2 ? (currentHour = `0${hour}`) : (currentHour = hour);
+
+    min.length < 2 ? (currentMin = `0${min}`) : (currentMin = min);
+    setTime(`${currentHour}:${currentMin}`);
     // } else {
     //   setCurrentUser(null);
     //   setIsSignedIn(false);
