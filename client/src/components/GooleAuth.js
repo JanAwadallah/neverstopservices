@@ -146,6 +146,7 @@ const GoogleAuth = () => {
     let fetchedAddress = "";
     const { latitude, longitude } = pos.coords;
     const key = process.env.REACT_APP_GEOCODE_KEY;
+    console.log(key);
     fetch(
       `https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=${key}`
     )
