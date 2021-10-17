@@ -33,18 +33,7 @@ app.post("/insert", (req, res) => {
   );
 });
 
-app.get("/list", (req, res) => {
-  const sqlList = "SELECT * FROM heroku_cb67353c6266fb0.check;";
-  db.query(sqlList, (err, result) => {
-    if (!err) {
-      return res.json({
-        data: result,
-      });
-    } else {
-      console.log(err);
-    }
-  });
-});
+
 
 if (process.env.NODE_ENV === "production") {
   app.use(express.static("client/build"));
