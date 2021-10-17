@@ -8,7 +8,7 @@ function App() {
     <Router>
       <Switch>
         <Route path="/" exact component={GooleAuth} />
-        <Route path="/list" exact component={List} />
+        <Route path="/data" exact component={List} />
       </Switch>
     </Router>
   );
