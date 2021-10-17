@@ -14,30 +14,9 @@ const GoogleAuth = () => {
 
   useEffect(() => {
     onAuthChange();
-    // window.gapi.load("client:auth2", () => {
-    //   window.gapi.client
-    //     .init({
-    //       clientId:
-    //         "256546520924-ipdcpbq22ltoruqv2n9hbqug7c14f063.apps.googleusercontent.com",
-    //       scope: "email",
-    //     })
-    //     .then(() => {
-    //       const auth = window.gapi.auth2.getAuthInstance();
-    //       setIsSignedIn(window.gapi.auth2.getAuthInstance().isSignedIn.get());
-    //       auth.isSignedIn.listen(onAuthChange);
-    //     });
-    // });
   }, [isSignedIn, address]);
 
   const onAuthChange = () => {
-    // if (isSignedIn) {
-    // setCurrentUser(
-    //   window.gapi.auth2
-    //     .getAuthInstance()
-    //     .currentUser.get()
-    //     .getBasicProfile()
-    //     .getName()
-    // );
     setDate(
       `${new Date().getDate()}/${
         new Date().getMonth() + 1
@@ -51,10 +30,6 @@ const GoogleAuth = () => {
 
     min.length < 2 ? (currentMin = `0${min}`) : (currentMin = min);
     setTime(`${currentHour}:${currentMin}`);
-    // } else {
-    //   setCurrentUser(null);
-    //   setIsSignedIn(false);
-    // }
   };
 
   const onSubmit = (currentUser) => {
@@ -139,8 +114,6 @@ const GoogleAuth = () => {
   const googleSignOut = () => {
     alert("All done thank you");
     setIsSignedIn(false);
-
-    // setIsSignedIn(window.gapi.auth2.getAuthInstance().isSignedIn.get());
   };
 
   const getPosition = () => {
@@ -153,20 +126,25 @@ const GoogleAuth = () => {
     let fetchedAddress = "";
     const { latitude, longitude } = pos.coords;
     const key = process.env.REACT_APP_GEOCODE_KEY;
+    const keyOpenCage = process.env.REACT_APP_OPENCAGE_KEY;
 
     fetch(
-      `https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=${key}`
+      // `https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=${key}`
+      `https://api.opencagedata.com/geocode/v1/json?q=${latitude}+${longitude}&key=${keyOpenCage}`
     )
       .then((res) => {
         if (!res.ok) throw new Error(`Error ${res.status}`);
         return res.json();
       })
       .then((data) => {
-        if (data.results[0]) {
-          fetchedAddress = data.results[0].formatted_address;
+        // if (data.results[0]) {
+        //   fetchedAddress = data.results[0].formatted_address;
 
-          setAddress(fetchedAddress);
-        }
+        //   setAddress(fetchedAddress);
+        // }
+        // if (data.results) {
+        setAddress(data.results[0].formatted);
+        // }
       });
   });
 

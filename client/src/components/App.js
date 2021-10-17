@@ -1,11 +1,16 @@
 import React from "react";
 import GooleAuth from "./GooleAuth";
+import List from "./List";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 function App() {
   return (
-    <div>
-      <GooleAuth />
-    </div>
+    <Router>
+      <Switch>
+        <Route path="/" exact component={GooleAuth} />
+        <Route path="/list" exact component={List} />
+      </Switch>
+    </Router>
   );
 }
 
