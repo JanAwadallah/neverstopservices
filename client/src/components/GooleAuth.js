@@ -125,12 +125,12 @@ const GoogleAuth = () => {
   getPosition().then((pos) => {
     let fetchedAddress = "";
     const { latitude, longitude } = pos.coords;
-    const key = process.env.REACT_APP_GEOCODE_KEY;
-    const keyOpenCage = process.env.REACT_APP_OPENCAGE_KEY;
+    // const key = process.env.REACT_APP_GEOCODE_KEY;
+    const key = process.env.REACT_APP_OPENCAGE_KEY;
 
     fetch(
       // `https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=${key}`
-      `https://api.opencagedata.com/geocode/v1/json?q=${latitude}+${longitude}&key=${keyOpenCage}`
+      `https://api.opencagedata.com/geocode/v1/json?q=${latitude}+${longitude}&key=${key}`
     )
       .then((res) => {
         if (!res.ok) throw new Error(`Error ${res.status}`);
