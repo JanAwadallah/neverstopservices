@@ -5,18 +5,21 @@ import axios from "axios";
 
 import Form from "./Form";
 
-const GoogleAuth = () => {
+const GoogleAuth = (props) => {
   const [isSignedIn, setIsSignedIn] = useState(false);
+  const [user, setUser] = useState("");
   const [address, setAddress] = useState(null);
   const [checkStatus, setCheckStatus] = useState("");
   const [date, setDate] = useState("");
   const [time, setTime] = useState("");
+  const [error, setError] = useState(false);
 
   useEffect(() => {
     onAuthChange();
-  }, [isSignedIn, address]);
+  }, [isSignedIn, address, error]);
 
   const onAuthChange = () => {
+    setUser(props.match.params.userName);
     setDate(
       `${new Date().getDate()}/${
         new Date().getMonth() + 1
@@ -33,7 +36,12 @@ const GoogleAuth = () => {
   };
 
   const onSubmit = (currentUser) => {
-    const PORT = process.env.PORT || 4000;
+    if (!currentUser) {
+      setError(true);
+
+      return;
+    }
+
     axios
       .post("/insert", {
         currentUser: currentUser,
@@ -64,9 +72,13 @@ const GoogleAuth = () => {
             height: "100vh",
             width: "100vw",
           }}
+          className="ui container"
         >
           <Image src={nss} size="medium" centered />
           <Form
+            setError={setError}
+            error={error}
+            user={user}
             date={date}
             time={time}
             address={address}
@@ -123,7 +135,7 @@ const GoogleAuth = () => {
   };
 
   getPosition().then((pos) => {
-    let fetchedAddress = "";
+    // let fetchedAddress = "";
     const { latitude, longitude } = pos.coords;
     // const key = process.env.REACT_APP_GEOCODE_KEY;
     const key = process.env.REACT_APP_OPENCAGE_KEY;
