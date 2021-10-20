@@ -35,7 +35,7 @@ const CheckForm = ({
         width: "90vw",
       }}
     >
-      <Form className="ui container">
+      <Form>
         <Form.Field required>
           <label style={{ fontSize: 20 }}>Full Name</label>
           <input
