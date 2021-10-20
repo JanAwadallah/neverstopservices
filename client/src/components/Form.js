@@ -73,7 +73,7 @@ const CheckForm = ({
           {checkStatus === "IN" ? "Check in" : "Check out"}
         </Button>
       </Form>
-      <Link to="/list">List</Link>
+
     </div>
   );
 };
