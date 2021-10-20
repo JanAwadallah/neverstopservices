@@ -72,7 +72,7 @@ const GoogleAuth = (props) => {
             height: "100vh",
             width: "100vw",
           }}
-          className="ui container"
+          
         >
           <Image src={nss} size="medium" centered />
           <Form
