@@ -3,6 +3,7 @@ const app = express();
 const cors = require("cors");
 const bodyParser = require("body-parser");
 const mysql = require("mysql");
+const path = require("path");
 
 const db = mysql.createPool({
   host: "us-cdbr-east-04.cleardb.com",
