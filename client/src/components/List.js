@@ -9,12 +9,11 @@ export default function List() {
     const res = await axios.get("/list");
     setLoaded(true);
     setData(res.data.data);
-    console.log(data);
   };
 
   useEffect(() => {
     getData();
-  }, [data]);
+  }, []);
 
   const renderData = (arr) => {
     if (arr.length === 0) {
