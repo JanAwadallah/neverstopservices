@@ -14,7 +14,7 @@ export default function List() {
 
   useEffect(() => {
     getData();
-  }, []);
+  }, [data]);
 
   const renderData = (arr) => {
     if (arr.length === 0) {
