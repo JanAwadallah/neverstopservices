@@ -17,19 +17,19 @@ export default function List() {
   }, [data]);
 
   const renderData = (arr) => {
-//     if (arr.length === 0) {
-//       return (
-//         <tr>
-//           <td>
-//             <div style={{ marginTop: 30 }}>
-//               <center>
-//                 <h1>No data to display</h1>
-//               </center>
-//             </div>
-//           </td>
-//         </tr>
-//       );
-//     }
+    if (arr.length === 0) {
+      return (
+        <tr>
+          <td>
+            <div style={{ marginTop: 30 }}>
+              <center>
+                <h1>No data to display</h1>
+              </center>
+            </div>
+          </td>
+        </tr>
+      );
+    }
     return arr.map((item) => (
       <table className="ui structured striped celled small table unstackable">
         <thead>
