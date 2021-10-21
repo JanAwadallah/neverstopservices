@@ -34,12 +34,12 @@ export default function List() {
         <thead>
           <tr>
             <th colSpan="4" className="full-width">
-              Name
+              Name: {item.fullname}
             </th>
           </tr>
-          <tr>
-            <td className="full-width" data-label="Name">{item.fullname}</td>
-          </tr>
+//           <tr>
+//             <td className="full-width" data-label="Name">{item.fullname}</td>
+//           </tr>
           <tr>
             <th className="four wide">Adress</th>
             <th className="one wide">Date</th>
