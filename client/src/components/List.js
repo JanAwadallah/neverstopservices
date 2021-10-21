@@ -6,7 +6,7 @@ export default function List() {
   const [data, setData] = useState([]);
   const [loaded, setLoaded] = useState(false);
   const getData = async () => {
-    const res = await axios("/list");
+    const res = await axios.get("/list");
     setLoaded(true);
     setData(res.data.data);
   };
