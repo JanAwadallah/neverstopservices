@@ -33,12 +33,12 @@ export default function List() {
       <table className="ui structured striped celled small table unstackable">
         <thead>
           <tr>
-            <th colSpan="4" class="full-width">
+            <th colSpan="4" className="full-width">
               Name
             </th>
           </tr>
           <tr>
-            <td data-label="Name">{item.fullname}</td>
+            <td className="full-width" data-label="Name">{item.fullname}</td>
           </tr>
           <tr>
             <th className="four wide">Adress</th>
