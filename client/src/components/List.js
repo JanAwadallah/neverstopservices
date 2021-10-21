@@ -36,6 +36,7 @@ export default function List() {
             <th colSpan="4" className="full-width">
               Name: {item.fullname}
             </th>
+          </tr>
   
           <tr>
             <th className="four wide">Adress</th>
