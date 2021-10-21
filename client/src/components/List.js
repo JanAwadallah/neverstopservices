@@ -1,19 +1,22 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
 import axios from "axios";
+import { Select } from "semantic-ui-react";
 
 export default function List() {
   const [data, setData] = useState([]);
+  const [selectedEmployee, setSelectedEmployee] = useState("");
   const [loaded, setLoaded] = useState(false);
+  const [displayStatus, setDisplayStatus] = useState("disabled");
+
   const getData = async () => {
-    const res = await axios.get("/list");
+    const res = await axios.get(`/list?selectedEmployee=${selectedEmployee}`);
     setLoaded(true);
     setData(res.data.data);
   };
 
   useEffect(() => {
     getData();
-  }, []);
+  }, [selectedEmployee]);
 
   const renderData = (arr) => {
     if (arr.length === 0) {
@@ -30,14 +33,17 @@ export default function List() {
       );
     }
     return arr.map((item) => (
-      <table className="ui structured striped celled small table unstackable">
+      <table
+        key={item.id}
+        className="ui structured striped celled small table unstackable"
+      >
         <thead>
           <tr>
             <th colSpan="4" className="full-width">
-              Name: {item.fullname}
+              Name : {item.fullname}
             </th>
           </tr>
-  
+
           <tr>
             <th className="four wide">Adress</th>
             <th className="one wide">Date</th>
@@ -71,7 +77,37 @@ export default function List() {
   }
 
   return (
-    <div style={{ padding: "5%" }} className="ui container">
+    <div style={{ margin: "10%" }} className="ui container">
+      <Select
+        onChange={(e) => {
+          setSelectedEmployee(e.target.innerText);
+          setDisplayStatus("");
+        }}
+        placeholder="Select Employee"
+        options={[
+          ...new Set(
+            data.map((name) => {
+              return name.fullname;
+            })
+          ),
+        ].map((item) => {
+          return {
+            key: item,
+            value: item,
+            text: item,
+          };
+        })}
+      />
+      <button
+        onClick={() => {
+          setSelectedEmployee("");
+          setDisplayStatus("disabled");
+        }}
+        style={{ marginLeft: 10 }}
+        className={`ui button blue ${displayStatus}`}
+      >
+        Clear filter
+      </button>
       {renderData(data)}
     </div>
   );
