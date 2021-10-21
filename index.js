@@ -35,8 +35,11 @@ app.post("/insert", (req, res) => {
 });
 
 app.get("/list", (req, res) => {
-  const sqlList = "SELECT * FROM heroku_cb67353c6266fb0.check;";
-  const data = db.query(sqlList, (err, result) => {
+  const selectedEmployee = req.query.selectedEmployee;
+  console.log(selectedEmployee);
+  const filter = selectedEmployee ? "WHERE fullname = ?" : "";
+  const sqlList = `SELECT * FROM heroku_cb67353c6266fb0.check ${filter}  ;`;
+  const data = db.query(sqlList, [selectedEmployee], (err, result) => {
     if (!err) {
       return res.json({
         data: result,
