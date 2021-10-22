@@ -49,8 +49,8 @@ const CheckForm = ({
             setCurrentUser={setCurrentUser}
             suggestions={[
               "Eralnta Kantioli",
-              "Girgis Mansour",
               "George Kalta",
+              "Girgis Mansour",
               "Karim Ramez",
               "Makram Tadros",
               "Nader Sarkis",
