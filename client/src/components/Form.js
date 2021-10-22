@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Button, Form } from "semantic-ui-react";
+import AutoComplete from "./Autocomplete";
+import "./style.css";
 
 const CheckForm = ({
   onSubmit,
@@ -30,22 +32,31 @@ const CheckForm = ({
   };
 
   return (
-    <div
-      style={{
-        width: "90vw",
-      }}
-    >
-      <Form>
+    <div className="container" style={{ width: "90vw" }}>
+      <Form onkeydown="return event.key != 'Enter';">
         <Form.Field required>
           <label style={{ fontSize: 20 }}>Full Name</label>
-          <input
+          {/* <input
             id="fullname"
             value={currentUser}
             onChange={(e) => {
               setCurrentUser(e.target.value);
               setError(false);
             }}
-            placeholder="Please enter your Full Name      أكتب الاسم بالكامل"
+            placeholder="Please enter your Full Name"
+          /> */}
+          <AutoComplete
+            setCurrentUser={setCurrentUser}
+            suggestions={[
+              "Eralnta Kantioli",
+              "Girgis Mansour",
+              "George Kalta",
+              "Karim Ramez",
+              "Makram Tadros",
+              "Nader Sarkis",
+              "Sumitpal Singh",
+              "Youssf Gad",
+            ]}
           />
           {errorDiv("Name")}
         </Form.Field>
@@ -66,6 +77,12 @@ const CheckForm = ({
           style={{ fontSize: 20 }}
           className="fluid ui button"
           type="submit"
+          onkeydown={(e) => {
+            if (e.keyCode === 13) {
+              e.preventDefault();
+              return false;
+            }
+          }}
           onClick={() => {
             onSubmit(currentUser);
           }}
@@ -73,7 +90,6 @@ const CheckForm = ({
           {checkStatus === "IN" ? "Check in" : "Check out"}
         </Button>
       </Form>
-
     </div>
   );
 };
