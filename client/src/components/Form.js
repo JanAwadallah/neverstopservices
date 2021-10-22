@@ -32,7 +32,7 @@ const CheckForm = ({
   };
 
   return (
-    <div className="container" style={{ width: "90vw" maxWidth: 500 }}>
+    <div className="container" style={{ width: "90vw", maxWidth: 500 }}>
       <Form onkeydown="return event.key != 'Enter';">
         <Form.Field required>
           <label style={{ fontSize: 20 }}>Full Name</label>
