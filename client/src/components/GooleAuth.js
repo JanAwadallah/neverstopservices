@@ -63,13 +63,7 @@ const GoogleAuth = (props) => {
       return (
         <div
           style={{
-            background: hsla(218, 100%, 42%, 1);
-            background: linear-gradient(
-            180deg,
-             hsla(218, 100%, 40%, 0.6) 0%,
-             hsla(0, 0%, 98%, 1) 100%
-            );
-            background-repeat: no-repeat;
+            background:"#aac5f2",
             fontSize: 50,
             display: "flex",
             flexDirection: "column",
