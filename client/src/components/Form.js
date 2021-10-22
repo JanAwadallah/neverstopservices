@@ -55,7 +55,7 @@ const CheckForm = ({
               "Makram Tadros",
               "Nader Sarkis",
               "Sumitpal Singh",
-              "Youssf Gad",
+              "Youssef Gad",
             ]}
           />
           {errorDiv("Name")}
