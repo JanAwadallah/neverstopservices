@@ -35,11 +35,8 @@ app.post("/insert", (req, res) => {
 });
 
 app.get("/list", (req, res) => {
-  const selectedEmployee = req.query.selectedEmployee;
-  console.log(selectedEmployee);
-  const filter = selectedEmployee ? "WHERE fullname = ?" : "";
-  const sqlList = `SELECT * FROM heroku_cb67353c6266fb0.check ${filter}  ;`;
-  const data = db.query(sqlList, [selectedEmployee], (err, result) => {
+  const sqlList = `SELECT * FROM heroku_cb67353c6266fb0.check ORDER BY fullname ASC, date ASC ;`;
+  const data = db.query(sqlList, (err, result) => {
     if (!err) {
       return res.json({
         data: result,
@@ -50,7 +47,6 @@ app.get("/list", (req, res) => {
     res.render("/list");
   });
 });
-
 if (process.env.NODE_ENV === "production") {
   app.use(express.static("client/build"));
   app.get("*", (req, res) => {
