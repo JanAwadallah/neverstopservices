@@ -123,6 +123,9 @@ export default function List() {
             value={selectedEmployee}
             id="selectName"
             onChange={(e) => {
+               if (e.type === "blur") {
+                return;
+              }
               setSelectedEmployee(e.target.innerText);
               setDisplayStatus("");
             }}
@@ -157,6 +160,9 @@ export default function List() {
             value={selectedDate}
             id="selectDate"
             onChange={(e) => {
+             if (e.type === "blur") {
+                return;
+              }
               setSelectedDate(e.target.innerText);
               setDisplayStatusDate("");
             }}
