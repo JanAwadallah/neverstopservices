@@ -5,18 +5,50 @@ import { Select } from "semantic-ui-react";
 export default function List() {
   const [data, setData] = useState([]);
   const [selectedEmployee, setSelectedEmployee] = useState("");
+  const [selectedDate, setSelectedDate] = useState("");
+  const [selectedData, setSelectedData] = useState([]);
   const [loaded, setLoaded] = useState(false);
   const [displayStatus, setDisplayStatus] = useState("disabled");
+  const [displayStatusDate, setDisplayStatusDate] = useState("disabled");
 
   const getData = async () => {
-    const res = await axios.get(`/list?selectedEmployee=${selectedEmployee}`);
+    const res = await axios.get(`/list`);
     setLoaded(true);
     setData(res.data.data);
+    filtered(res.data.data);
+  };
+
+  const filtered = (arr) => {
+    const filteredData = arr.filter((item) => {
+      if (selectedDate || selectedEmployee) {
+        if (selectedDate && selectedEmployee) {
+          if (
+            item.date === selectedDate &&
+            item.fullname === selectedEmployee
+          ) {
+            return item;
+          }
+        } else if (!selectedDate) {
+          if (item.fullname === selectedEmployee) {
+            return item;
+          }
+        } else if (!selectedEmployee) {
+          if (item.date === selectedDate) {
+            return item;
+          }
+        }
+      } else {
+        return item;
+      }
+    });
+    setSelectedData(filteredData);
   };
 
   useEffect(() => {
     getData();
-  }, [selectedEmployee]);
+  }, [selectedEmployee, selectedDate]);
+
+  console.log(selectedData);
 
   const renderData = (arr) => {
     if (arr.length === 0) {
@@ -78,37 +110,84 @@ export default function List() {
 
   return (
     <div style={{ margin: "10%" }} className="ui container">
-      <Select
-        onChange={(e) => {
-          setSelectedEmployee(e.target.innerText);
-          setDisplayStatus("");
+      <div
+        style={{
+          display: "flex",
+          flex: 1,
+          justifyContent: "space-between",
+          alignItems: "center",
         }}
-        placeholder="Select Employee"
-        options={[
-          ...new Set(
-            data.map((name) => {
-              return name.fullname;
-            })
-          ),
-        ].map((item) => {
-          return {
-            key: item,
-            value: item,
-            text: item,
-          };
-        })}
-      />
-      <button
-        onClick={() => {
-          setSelectedEmployee("");
-          setDisplayStatus("disabled");
-        }}
-        style={{ marginLeft: 10 }}
-        className={`ui button blue ${displayStatus}`}
       >
-        Clear filter
-      </button>
-      {renderData(data)}
+        <div>
+          <Select
+            value={selectedEmployee}
+            id="selectName"
+            onChange={(e) => {
+              setSelectedEmployee(e.target.innerText);
+              setDisplayStatus("");
+            }}
+            placeholder="Select Employee"
+            options={[
+              ...new Set(
+                data.map((name) => {
+                  return name.fullname;
+                })
+              ),
+            ].map((item) => {
+              return {
+                key: item,
+                value: item,
+                text: item,
+              };
+            })}
+          />
+          <button
+            onClick={() => {
+              setSelectedEmployee("");
+              setDisplayStatus("disabled");
+            }}
+            style={{ margin: 10 }}
+            className={`ui button blue ${displayStatus}`}
+          >
+            Clear Name filter
+          </button>
+        </div>
+        <div>
+          <Select
+            value={selectedDate}
+            id="selectDate"
+            onChange={(e) => {
+              setSelectedDate(e.target.innerText);
+              setDisplayStatusDate("");
+            }}
+            placeholder="Select Date"
+            options={[
+              ...new Set(
+                data.map((dateFilter) => {
+                  return dateFilter.date;
+                })
+              ),
+            ].map((item) => {
+              return {
+                key: item,
+                value: item,
+                text: item,
+              };
+            })}
+          />
+          <button
+            onClick={() => {
+              setSelectedDate("");
+              setDisplayStatusDate("disabled");
+            }}
+            style={{ margin: 10 }}
+            className={`ui button blue ${displayStatusDate}`}
+          >
+            Clear Date filter
+          </button>
+        </div>
+      </div>
+      <div style={{ paddingBottom: "10%" }}> {renderData(selectedData)}</div>
     </div>
   );
 }
