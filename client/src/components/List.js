@@ -118,7 +118,7 @@ export default function List() {
           alignItems: "center",
         }}
       >
-        <div>
+        <div style={{ maxWidth: "40%" }}>
           <Select
             value={selectedEmployee}
             id="selectName"
@@ -155,7 +155,7 @@ export default function List() {
             Clear Name filter
           </button>
         </div>
-        <div>
+        <div style={{ maxWidth: "40%" }}>
           <Select
             value={selectedDate}
             id="selectDate"
