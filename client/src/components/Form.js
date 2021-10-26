@@ -63,7 +63,6 @@ const CheckForm = ({
         <Form.Field required>
           <label style={{ fontSize: 20 }}>Address</label>
           <input
-            required
             value={address ? address : manAddress}
             onChange={(e) => {
               setManAddress(e.target.value);
