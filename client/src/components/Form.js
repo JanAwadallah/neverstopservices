@@ -4,17 +4,9 @@ import { Button, Form } from "semantic-ui-react";
 import AutoComplete from "./Autocomplete";
 import "./style.css";
 
-const CheckForm = ({
-  onSubmit,
-  address,
-  checkStatus,
-  date,
-  time,
-  user,
-  error,
-  setError,
-}) => {
+const CheckForm = ({ onSubmit, checkStatus, date, time, user, error }) => {
   const [currentUser, setCurrentUser] = useState(user);
+  const [manAddress, setManAddress] = useState("");
   useEffect(() => {
     errorDiv();
   }, [currentUser]);
@@ -32,7 +24,10 @@ const CheckForm = ({
   };
 
   return (
-    <div className="container" style={{ width: "90vw", maxWidth: 500 }}>
+    <div
+      className=" ui form centered "
+      style={{ width: "90vw", maxWidth: 500 }}
+    >
       <Form onkeydown="return event.key != 'Enter';">
         <Form.Field required>
           <label style={{ fontSize: 20 }}>Full Name</label>
@@ -49,20 +44,26 @@ const CheckForm = ({
             setCurrentUser={setCurrentUser}
             suggestions={[
               "Eralnta Kantioli",
-              "George Kalta",
               "Girgis Mansour",
+              "George Kalta",
               "Karim Ramez",
               "Makram Tadros",
               "Nader Sarkis",
               "Sumitpal Singh",
-              "Youssef Gad",
+              "Youssf Gad",
             ]}
           />
           {errorDiv("Name")}
         </Form.Field>
         <Form.Field required>
           <label style={{ fontSize: 20 }}>Address</label>
-          <input required value={address} />
+          <input
+            required
+            value={manAddress}
+            onChange={(e) => {
+              setManAddress(e.target.value);
+            }}
+          />
         </Form.Field>
         <Form.Field required>
           <label style={{ fontSize: 20 }}>Date</label>
@@ -84,7 +85,7 @@ const CheckForm = ({
             }
           }}
           onClick={() => {
-            onSubmit(currentUser);
+            onSubmit(currentUser, manAddress);
           }}
         >
           {checkStatus === "IN" ? "Check in" : "Check out"}
