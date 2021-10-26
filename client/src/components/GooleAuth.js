@@ -35,17 +35,18 @@ const GoogleAuth = (props) => {
     setTime(`${currentHour}:${currentMin}`);
   };
 
-  const onSubmit = (currentUser) => {
+  const onSubmit = (currentUser, manAddress) => {
     if (!currentUser) {
       setError(true);
 
       return;
     }
+    console.log(address);
 
     axios
       .post("/insert", {
         currentUser: currentUser,
-        address: address,
+        address: address ? address : manAddress,
         date: date,
         time: time,
         checkStatus: checkStatus,
@@ -63,25 +64,22 @@ const GoogleAuth = (props) => {
       return (
         <div
           style={{
-            background:"#aac5f2",
+            backgroundColor: "#a3aad6",
             fontSize: 50,
             display: "flex",
             flexDirection: "column",
             justifyContent: "center",
             alignItems: "center",
             height: "100vh",
-            width: "100vw",
+            width: "100%",
           }}
-          
         >
           <Image src={nss} size="medium" centered />
           <Form
-            setError={setError}
             error={error}
             user={user}
             date={date}
             time={time}
-            address={address}
             checkStatus={checkStatus}
             onSubmit={onSubmit}
           />
@@ -145,7 +143,11 @@ const GoogleAuth = (props) => {
       `https://api.opencagedata.com/geocode/v1/json?q=${latitude}+${longitude}&key=${key}`
     )
       .then((res) => {
-        if (!res.ok) throw new Error(`Error ${res.status}`);
+        if (!res.ok) {
+          setAddress("");
+          //  throw new Error(`Error ${res.status}`);
+          return;
+        }
         return res.json();
       })
       .then((data) => {
@@ -160,7 +162,7 @@ const GoogleAuth = (props) => {
       });
   });
 
-  return <div className="ui flex"> {renderAuth()}</div>;
+  return <div className="ui flex">{renderAuth()}</div>;
 };
 
 export default GoogleAuth;
