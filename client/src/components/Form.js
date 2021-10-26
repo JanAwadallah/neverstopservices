@@ -4,12 +4,17 @@ import { Button, Form } from "semantic-ui-react";
 import AutoComplete from "./Autocomplete";
 import "./style.css";
 
-const CheckForm = ({ onSubmit, checkStatus, date, time, user, error }) => {
+const CheckForm = ({
+  onSubmit,
+  checkStatus,
+  date,
+  time,
+  user,
+  error,
+  address,
+}) => {
   const [currentUser, setCurrentUser] = useState(user);
   const [manAddress, setManAddress] = useState("");
-  useEffect(() => {
-    errorDiv();
-  }, [currentUser]);
 
   const errorDiv = (field) => {
     if (error) {
@@ -53,17 +58,18 @@ const CheckForm = ({ onSubmit, checkStatus, date, time, user, error }) => {
               "Youssf Gad",
             ]}
           />
-          {errorDiv("Name")}
+          {!currentUser && errorDiv("Name")}
         </Form.Field>
         <Form.Field required>
           <label style={{ fontSize: 20 }}>Address</label>
           <input
             required
-            value={manAddress}
+            value={address ? address : manAddress}
             onChange={(e) => {
               setManAddress(e.target.value);
             }}
           />
+          {!manAddress && !address && errorDiv("address")}
         </Form.Field>
         <Form.Field required>
           <label style={{ fontSize: 20 }}>Date</label>
