@@ -35,7 +35,7 @@ app.post("/insert", (req, res) => {
 });
 
 app.get("/list", (req, res) => {
-  const sqlList = `SELECT * FROM heroku_cb67353c6266fb0.check ORDER BY fullname ASC, date ASC ;`;
+  const sqlList = `SELECT * FROM heroku_cb67353c6266fb0.check ORDER BY date ASC, fullname ASC;`;
   const data = db.query(sqlList, (err, result) => {
     if (!err) {
       return res.json({
