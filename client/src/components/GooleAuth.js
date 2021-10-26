@@ -36,7 +36,7 @@ const GoogleAuth = (props) => {
   };
 
   const onSubmit = (currentUser, manAddress) => {
-    if (!currentUser) {
+    if (!currentUser || (!manAddress && !address)) {
       setError(true);
 
       return;
@@ -76,6 +76,7 @@ const GoogleAuth = (props) => {
         >
           <Image src={nss} size="medium" centered />
           <Form
+            address={address}
             error={error}
             user={user}
             date={date}
