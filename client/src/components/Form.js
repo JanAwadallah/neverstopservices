@@ -20,7 +20,7 @@ const CheckForm = ({
     if (error) {
       return (
         <div className="ui negative message center aligned segment ">
-          <h4>{field} can not be blanck</h4>
+          <h4>{field} can not be blank</h4>
         </div>
       );
     } else {
